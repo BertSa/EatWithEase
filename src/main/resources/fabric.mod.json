@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "eat-with-ease",
+  "version": "${version}",
+  "name": "Eat With Ease",
+  "description": "Eat your food when pressing a key",
+  "authors": [
+    "Samuel Bertrand"
+  ],
+  "contact": {
+  },
+  "license": "",
+  "icon": "assets/eat-with-ease/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "ca.bertsa.eatwithease.EatWithEaseClient"
+    ],
+    "modmenu": [
+      "ca.bertsa.eatwithease.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "mod-menu": "~13.0.2"
+  }
+}
