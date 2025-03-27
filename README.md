@@ -1,3 +1,4 @@
+![Title](https://github.com/BertSa/BertSa/blob/main/resources/minecraft_projects/eatwithease/minecraft_title.png)
 ## Description
 This mod adds a keybinding to eat foods in your inventory!
 
