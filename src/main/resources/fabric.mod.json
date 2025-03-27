@@ -8,8 +8,9 @@
     "Samuel Bertrand"
   ],
   "contact": {
+    "sources": "https://github.com/BertSa/EatWithEase"
   },
-  "license": "",
+  "license": "MIT",
   "icon": "assets/eat-with-ease/icon.png",
   "environment": "client",
   "entrypoints": {
