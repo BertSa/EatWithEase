@@ -1,5 +1,7 @@
 package ca.bertsa.eatwithease.client;
 
+import lombok.AccessLevel;
+import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -18,6 +20,7 @@ public abstract class KeyEventHandler {
 
     protected final MinecraftClient client;
 
+    @Setter(AccessLevel.PRIVATE)
     private Integer lastItemSwappedSlot;
 
     public KeyEventHandler() {
@@ -29,12 +32,13 @@ public abstract class KeyEventHandler {
 
     public abstract void handleKeyPressed();
 
-    private void setLastItemSwappedSlot(Integer lastItemSwappedSlot) {
-        this.lastItemSwappedSlot = lastItemSwappedSlot;
-    }
-
     protected void swapStacksBack() {
+        if (lastItemSwappedSlot == null) {
+            return;
+        }
+
         swapStacks(lastItemSwappedSlot);
+        setLastItemSwappedSlot(null);
     }
 
     protected void swapStacks(int itemSwappedSlot) {

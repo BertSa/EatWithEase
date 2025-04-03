@@ -9,6 +9,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +46,14 @@ public class EatWithEaseClient implements ClientModInitializer {
                     return;
                 }
 
-                ItemWithSlot itemStackWithSlot = getFirstMatchingItem(itemStack -> itemStack.contains(DataComponentTypes.FOOD) && !EatWithEaseConfig.isBlacklisted(itemStack));
-                super.swapStacks(itemStackWithSlot.slot);
+
+                PlayerInventory inventory = client.player.getInventory();
+                ItemStack stack = inventory.getStack(inventory.selectedSlot);
+                if (!stack.contains(DataComponentTypes.FOOD) || EatWithEaseConfig.isBlacklisted(stack)) {
+                    ItemWithSlot itemStackWithSlot = getFirstMatchingItem(itemStack -> itemStack.contains(DataComponentTypes.FOOD) && !EatWithEaseConfig.isBlacklisted(itemStack));
+                    super.swapStacks(itemStackWithSlot.slot);
+                }
+
                 super.setPressed(true);
                 setEating(true);
             }
