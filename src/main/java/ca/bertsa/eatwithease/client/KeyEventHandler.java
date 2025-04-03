@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
@@ -100,6 +101,10 @@ public abstract class KeyEventHandler {
 
     protected void setPressed(boolean pressed) {
         client.options.useKey.setPressed(pressed);
+    }
+
+    protected static boolean isStackFoodAndNotBlacklisted(ItemStack stack) {
+        return stack.contains(DataComponentTypes.FOOD) && !EatWithEaseConfig.isBlacklisted(stack);
     }
 
     protected static int getSlotIndex(int slot) {
