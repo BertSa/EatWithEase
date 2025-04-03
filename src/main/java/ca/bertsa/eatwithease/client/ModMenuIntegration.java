@@ -1,4 +1,4 @@
-package ca.bertsa.eatwithease;
+package ca.bertsa.eatwithease.client;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ca.bertsa.eatwithease.EatWithEaseConfig.DEFAULT_BLACKLIST;
+import static ca.bertsa.eatwithease.client.EatWithEaseConfig.DEFAULT_BLACKLIST;
 
 public class ModMenuIntegration implements ModMenuApi {
     private static final String title = "Eat With Ease Settings";

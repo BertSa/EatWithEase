@@ -1,4 +1,4 @@
-package ca.bertsa.eatwithease;
+package ca.bertsa.eatwithease.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ca.bertsa.eatwithease.EatWithEaseClient.LOGGER;
+import static ca.bertsa.eatwithease.client.EatWithEaseClient.LOGGER;
 
 public class EatWithEaseConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

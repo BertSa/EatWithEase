@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "eat-with-ease",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Eat With Ease",
   "description": "Eat your food when pressing a key",
   "authors": [
@@ -15,19 +15,20 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "ca.bertsa.eatwithease.EatWithEaseClient"
+      "ca.bertsa.eatwithease.client.EatWithEaseClient"
     ],
     "modmenu": [
-      "ca.bertsa.eatwithease.ModMenuIntegration"
+      "ca.bertsa.eatwithease.client.ModMenuIntegration"
     ]
   },
   "depends": {
-    "fabricloader": ">=0.16.10",
-    "minecraft": "~1.21.4",
     "java": ">=21",
+    "minecraft": ">=${minecraft_version}",
+    "fabric": "*",
+    "fabricloader": ">=${loader_version}",
     "fabric-api": "*"
   },
   "suggests": {
-    "mod-menu": "~13.0.2"
+    "mod-menu": ">={modmenu_version}"
   }
 }
