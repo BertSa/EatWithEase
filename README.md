@@ -1,12 +1,13 @@
 ![Title](https://github.com/BertSa/BertSa/blob/main/resources/minecraft_projects/eatwithease/minecraft_title.png)
 
-<center>
+<div align="center">
+
 
 [![github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_64h.png)](https://github.com/BertSa/EatWithEase)
 [![modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_64h.png)](https://modrinth.com/mod/eat-with-ease)
 
 ![fabric](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_64h.png)
-</center>
+</div>
 
 ## Description
 This mod adds a keybinding to eat foods in your inventory!
