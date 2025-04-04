@@ -1,5 +1,7 @@
 package ca.bertsa.eatwithease.client;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -19,15 +21,15 @@ public class EatWithEaseClient implements ClientModInitializer {
 
     private static KeyBinding eatingKeyBinding;
 
-    public static boolean scrollDisabled;
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    private static boolean eating = false;
 
     @Override
     public void onInitializeClient() {
         EatWithEaseConfig.loadConfig();
         eatingKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + MOD_ID + ".eat", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category." + MOD_ID + ".eat-with-ease"));
         registerEatingKeyPressedEvent(new KeyEventHandler() {
-            @Setter
-            private boolean eating = false;
 
             @Override
             public void handleKeyPressed() {
@@ -45,13 +47,11 @@ public class EatWithEaseClient implements ClientModInitializer {
                     return;
                 }
 
-
                 if (!isStackFoodAndNotBlacklisted(client.player.getMainHandStack()) && !isStackFoodAndNotBlacklisted(client.player.getOffHandStack())) {
                     ItemWithSlot itemStackWithSlot = getFirstMatchingItem(KeyEventHandler::isStackFoodAndNotBlacklisted);
                     super.swapStacks(itemStackWithSlot.slot);
                 }
 
-                scrollDisabled = true;
                 super.setPressed(true);
                 setEating(true);
             }
@@ -64,7 +64,6 @@ public class EatWithEaseClient implements ClientModInitializer {
                 }
 
                 if (eating) {
-                    scrollDisabled = false;
                     super.swapStacksBack();
                     super.setPressed(false);
                     setEating(false);

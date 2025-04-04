@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "ScrollDisableMixin"
+    "ScrollDisableMixin",
+    "PlayerPlaceBlock"
   ],
   "injectors": {
     "defaultRequire": 1
