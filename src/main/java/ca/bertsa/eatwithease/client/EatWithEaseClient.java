@@ -19,6 +19,8 @@ public class EatWithEaseClient implements ClientModInitializer {
 
     private static KeyBinding eatingKeyBinding;
 
+    public static boolean scrollDisabled;
+
     @Override
     public void onInitializeClient() {
         EatWithEaseConfig.loadConfig();
@@ -49,6 +51,7 @@ public class EatWithEaseClient implements ClientModInitializer {
                     super.swapStacks(itemStackWithSlot.slot);
                 }
 
+                scrollDisabled = true;
                 super.setPressed(true);
                 setEating(true);
             }
@@ -61,6 +64,7 @@ public class EatWithEaseClient implements ClientModInitializer {
                 }
 
                 if (eating) {
+                    scrollDisabled = false;
                     super.swapStacksBack();
                     super.setPressed(false);
                     setEating(false);

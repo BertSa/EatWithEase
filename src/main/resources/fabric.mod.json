@@ -28,6 +28,9 @@
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*"
   },
+  "mixins": [
+    "eatwithease.mixins.json"
+  ],
   "suggests": {
     "mod-menu": ">={modmenu_version}"
   }

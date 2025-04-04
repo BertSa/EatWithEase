@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ca.bertsa.eatwithease.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+    "ScrollDisableMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
