@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -35,7 +36,16 @@ public class ModMenuIntegration implements ModMenuApi {
                 .setTitle(Text.literal(title));
         ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
         ConfigEntryBuilder eb = builder.entryBuilder();
-
+        general.addEntry(eb.startEnumSelector(Text.literal("Preferred Hand"), Hand.class, EatWithEaseConfig.getPreferredHand())
+                .setDefaultValue(Hand.MAIN_HAND)
+                .setEnumNameProvider(anEnum -> switch (anEnum) {
+                    case Hand.MAIN_HAND -> Text.of("Main Hand");
+                    case Hand.OFF_HAND -> Text.of("Off Hand");
+                    default -> throw new IllegalArgumentException();
+                })
+                .setTooltip(Text.literal("The hand you will eat from."))
+                .setSaveConsumer(EatWithEaseConfig::setPreferredHand)
+                .build());
         general.addEntry(eb.startStrList(Text.literal("Blacklist"), EatWithEaseConfig.getBlacklist())
                 .setDefaultValue(DEFAULT_BLACKLIST)
                 .setTooltip(Text.literal(tooltipVanilla), Text.literal(tooltipModded))

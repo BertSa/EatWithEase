@@ -2,9 +2,12 @@ package ca.bertsa.eatwithease.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.Getter;
+import lombok.Setter;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
 import java.io.IOException;
@@ -32,6 +35,9 @@ public class EatWithEaseConfig {
     );
 
     private static List<String> blacklist = new ArrayList<>(DEFAULT_BLACKLIST);
+    @Getter
+    @Setter
+    private static Hand preferredHand = Hand.MAIN_HAND;
 
     public static boolean isBlacklisted(ItemStack stack) {
         if (stack == null || stack.isEmpty()) {
@@ -75,6 +81,7 @@ public class EatWithEaseConfig {
     private static Data toData() {
         Data data = new Data();
         data.blacklist = getBlacklist();
+        data.preferredHand = Hand.MAIN_HAND;
         return data;
     }
 
@@ -88,6 +95,7 @@ public class EatWithEaseConfig {
 
     private static class Data {
         List<String> blacklist;
+        Hand preferredHand;
     }
 
 }

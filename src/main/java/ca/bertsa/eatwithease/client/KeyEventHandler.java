@@ -9,6 +9,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,11 @@ public abstract class KeyEventHandler {
         }
 
         setLastItemSwappedSlot(itemSwappedSlot);
+
+        if (EatWithEaseConfig.getPreferredHand() == Hand.OFF_HAND) {
+            interactionManager.clickSlot(0, itemSwappedSlot, 40, SlotActionType.SWAP, player);
+            return;
+        }
 
         int selectedSlot = getSlotIndex(player.getInventory().selectedSlot);
 
