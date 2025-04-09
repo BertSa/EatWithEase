@@ -38,10 +38,9 @@ public class ModMenuIntegration implements ModMenuApi {
         ConfigEntryBuilder eb = builder.entryBuilder();
         general.addEntry(eb.startEnumSelector(Text.literal("Preferred Hand"), Hand.class, EatWithEaseConfig.getPreferredHand())
                 .setDefaultValue(Hand.MAIN_HAND)
-                .setEnumNameProvider(anEnum -> switch (anEnum) {
+                .setEnumNameProvider( anEnum -> switch (Hand.valueOf(anEnum.name())) {
                     case Hand.MAIN_HAND -> Text.of("Main Hand");
                     case Hand.OFF_HAND -> Text.of("Off Hand");
-                    default -> throw new IllegalArgumentException();
                 })
                 .setTooltip(Text.literal("The hand you will eat from."))
                 .setSaveConsumer(EatWithEaseConfig::setPreferredHand)

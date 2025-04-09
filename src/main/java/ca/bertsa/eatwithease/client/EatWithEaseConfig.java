@@ -61,8 +61,13 @@ public class EatWithEaseConfig {
             String json = Files.readString(CONFIG_PATH);
             Data data = GSON.fromJson(json, Data.class);
             if (data != null) {
-                setBlacklist(data.blacklist);
-                setPreferredHand(data.preferredHand);
+                if (!data.blacklist.isEmpty()) {
+                    setBlacklist(data.blacklist);
+                }
+
+                if (data.preferredHand != null) {
+                    setPreferredHand(data.preferredHand);
+                }
             }
         } catch (IOException e) {
             LOGGER.error("Failed to load config", e);
