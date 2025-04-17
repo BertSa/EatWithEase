@@ -49,6 +49,9 @@ public class EatWithEaseClient implements ClientModInitializer {
 
                 if (!isStackFoodAndNotBlacklisted(client.player.getMainHandStack()) && !isStackFoodAndNotBlacklisted(client.player.getOffHandStack())) {
                     ItemWithSlot itemStackWithSlot = getFirstMatchingItem(KeyEventHandler::isStackFoodAndNotBlacklisted);
+                    if (itemStackWithSlot == null){
+                        return;
+                    }
                     super.swapStacks(itemStackWithSlot.slot);
                 }
 
