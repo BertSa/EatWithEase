@@ -1,5 +1,8 @@
 package ca.bertsa.eatwithease.client;
 
+import ca.bertsa.grossesaucelib.callbacks.KeyEventCallback;
+import ca.bertsa.grossesaucelib.utils.InventoryUtils;
+import ca.bertsa.grossesaucelib.utils.PlayerInteractionUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,8 +11,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,58 +35,55 @@ public class EatWithEaseClient implements ClientModInitializer {
     public void onInitializeClient() {
         EatWithEaseConfig.loadConfig();
         eatingKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + MOD_ID + ".eat", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category." + MOD_ID + ".eat-with-ease"));
-        registerEatingKeyPressedEvent(new KeyEventHandler() {
+        registerEatingKeyPressedEvent(new KeyEventCallback() {
 
             @Override
-            public void handleKeyPressed() {
-                if (client.player == null) {
+            public void handleKeyPressed(@NotNull MinecraftClient client) {
+                ClientPlayerEntity player = client.player;
+
+                if (player == null) {
                     return;
                 }
 
-                if (!client.player.getHungerManager().isNotFull()) {
-                    super.setPressed(false);
+                if (!player.getHungerManager().isNotFull()) {
+                    PlayerInteractionUtils.setUseKeyPressedFalse();
                     return;
                 }
 
-                if (eating) {
-                    super.setPressed(true);
+                if (isEating()) {
+                    PlayerInteractionUtils.setUseKeyPressedTrue();
                     return;
                 }
 
-                if (!isStackFoodAndNotBlacklisted(client.player.getMainHandStack()) && !isStackFoodAndNotBlacklisted(client.player.getOffHandStack())) {
-                    ItemWithSlot itemStackWithSlot = getFirstMatchingItem(KeyEventHandler::isStackFoodAndNotBlacklisted);
-                    if (itemStackWithSlot == null){
+                if (!Utils.isStackFoodAndNotBlacklisted(player.getMainHandStack()) && !Utils.isStackFoodAndNotBlacklisted(player.getOffHandStack())) {
+                    Integer itemStackWithSlot = InventoryUtils.getSlotIndexOfFirstMatchingItem(Utils::isStackFoodAndNotBlacklisted);
+                    if (itemStackWithSlot == null) {
                         return;
                     }
-                    super.swapStacks(itemStackWithSlot.slot);
+                    InventoryUtils.swapStacksWithHand(EatWithEaseConfig.getPreferredHand(), itemStackWithSlot);
                 }
 
-                super.setPressed(true);
+                PlayerInteractionUtils.setUseKeyPressedTrue();
                 setEating(true);
             }
 
 
-            @Override
-            public void handleKeyReleased() {
-                if (client.player == null) {
-                    return;
-                }
-
-                if (eating) {
-                    super.swapStacksBack();
-                    super.setPressed(false);
+            public void handleKeyReleased(@NotNull MinecraftClient client) {
+                if (isEating()) {
+                    InventoryUtils.swapStacksBack();
+                    PlayerInteractionUtils.setUseKeyPressedFalse();
                     setEating(false);
                 }
             }
         });
     }
 
-    public void registerEatingKeyPressedEvent(KeyEventHandler keyEventHandler) {
+    public void registerEatingKeyPressedEvent(KeyEventCallback keyEventHandler) {
         ClientTickEvents.END_CLIENT_TICK.register(c -> {
             if (eatingKeyBinding.isPressed()) {
-                keyEventHandler.handleKeyPressed();
+                keyEventHandler.handleKeyPressed(c);
             } else {
-                keyEventHandler.handleKeyReleased();
+                keyEventHandler.handleKeyReleased(c);
             }
         });
     }
