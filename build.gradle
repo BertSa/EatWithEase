@@ -31,7 +31,7 @@ dependencies {
         exclude(group: "net.fabricmc", module: "fabric-loader")
     }
 
-//    modImplementation  "maven.modrinth:grossesaucelib:1.0.1"
+//    modImplementation  ("maven.modrinth:grossesaucelib:${project.grossesaucelib}")
     modImplementation ("ca.bertsa:grossesaucelib:${project.grossesaucelib}")
 }
 
@@ -41,6 +41,7 @@ processResources {
     inputs.property "loader_version", project.loader_version
     inputs.property "modmenu_version", project.modmenu_version
     inputs.property "grossesaucelib", project.grossesaucelib
+    inputs.property "cloth_config_version", project.cloth_config_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
@@ -48,7 +49,8 @@ processResources {
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
                 "modmenu_version": project.modmenu_version,
-                "grossesaucelib": project.grossesaucelib
+                "grossesaucelib": project.grossesaucelib,
+                "cloth_config_version": project.cloth_config_version
     }
 }
 

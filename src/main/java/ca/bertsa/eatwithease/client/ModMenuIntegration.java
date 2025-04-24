@@ -14,6 +14,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ca.bertsa.eatwithease.client.EatWithEaseConfig.DEFAULT_BLACKLIST;
@@ -63,12 +64,9 @@ public class ModMenuIntegration implements ModMenuApi {
                                 return true;
                             })
                             .filter(itemId -> {
-                                Identifier id = Identifier.tryParse(itemId.contains(":") ? itemId : namespace + itemId);
-                                if (id == null) {
-                                    return false;
-                                }
-                                Item item = Registries.ITEM.get(id);
-                                return id.toString().equals(namespace + "air") || !item.equals(Items.AIR);
+                                Identifier id = Identifier.of(itemId.contains(":") ? itemId : namespace + itemId);
+                                Optional<Item> item = Registries.ITEM.getOrEmpty(id);
+                                return item.filter(value -> id.toString().equals(namespace + "air") || !value.equals(Items.AIR)).isPresent();
                             })
                             .collect(Collectors.toList());
                     EatWithEaseConfig.setBlacklist(validated);

@@ -33,11 +33,12 @@
     "eatwithease.mixins.json"
   ],
   "suggests": {
-    "mod-menu": ">={modmenu_version}"
+    "mod-menu": ">=${modmenu_version}",
+    "cloth-config-fabric": ">=${cloth_config_version}"
   },
   "custom": {
     "modmenu": {
-      "badges": [ "library" ]
+      "badges": [ "mod" ]
     }
   }
 }
