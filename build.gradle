@@ -32,7 +32,7 @@ dependencies {
     }
 
 //    modImplementation  "maven.modrinth:grossesaucelib:1.0.1"
-    modImplementation 'ca.bertsa:GrosseSauceLib:1.0.0'
+    modImplementation ("ca.bertsa:grossesaucelib:${project.grossesaucelib}")
 }
 
 processResources {
@@ -40,13 +40,15 @@ processResources {
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
     inputs.property "modmenu_version", project.modmenu_version
+    inputs.property "grossesaucelib", project.grossesaucelib
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "mod_version": project.mod_version,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
-                "modmenu_version": project.modmenu_version
+                "modmenu_version": project.modmenu_version,
+                "grossesaucelib": project.grossesaucelib
     }
 }
 

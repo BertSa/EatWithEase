@@ -26,12 +26,18 @@
     "minecraft": ">=${minecraft_version}",
     "fabric": "*",
     "fabricloader": ">=${loader_version}",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "grossesaucelib": ">=${grossesaucelib}"
   },
   "mixins": [
     "eatwithease.mixins.json"
   ],
   "suggests": {
     "mod-menu": ">={modmenu_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [ "library" ]
+    }
   }
 }
